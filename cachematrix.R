@@ -1,7 +1,11 @@
-## Put comments here that give an overall description of what your
-## functions do
+## cachematrix.R: Kevin Payet
+## Code to compute the inverse of a matrix, and cache it so that the computation
+## is done only one time. The work is divided between two functions:
 
-## Write a short comment describing this function
+## makeCacheMatrix returns a list of functions:
+## set & get:                   used to set and retrieve the matrix M
+## set_inverse & get_inverse:   used to set and retrieve the inverse I_M of M
+## both matrices are cached so that the computation is done only once (by cacheSolve)
 
 makeCacheMatrix <- function(x = matrix()) {
     inverse <- NULL
@@ -23,14 +27,18 @@ makeCacheMatrix <- function(x = matrix()) {
         inverse
     }
     
-    list(set = set, get = get, set_inverse = set_inverse, get_inverse = get_inverse)
+    list(set = set, get = get, 
+         set_inverse = set_inverse, get_inverse = get_inverse)
 }
 
 
-## Write a short comment describing this function
+## cacheSolve looks for the inverse of the matrix in the list parameter
+## if found, it returns the inverse and does nothing else
+## if not found, it computes the inverse of the matrix and caches it with 
+## set_inverse()
 
 cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
+    ## Return a matrix that is the inverse of 'x'
     inverse <- x$get_inverse()
     if(!is.null(inverse)) {
         print("Retrieving cached computation of inverse...")
